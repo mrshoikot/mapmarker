@@ -9,64 +9,45 @@
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmegoQG9lFj7MsrLb1evQxn669_ozZl-E&callback=initMap&libraries=&v=weekly"
         defer></script>
-    <style type="text/css">
-        /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-        #map {
-            height: 100%;
-        }
-
-        /* Optional: Makes the sample page fill the window. */
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-    </style>
-    <script>
-        let map;
-
-        function initMap() {
-            map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 5,
-                center: new google.maps.LatLng(39.97460054, -75.16314899),
-                mapTypeId: "terrain",
-            });
-            $.getJSON("big.json", function (json) {
-                map.data.loadGeoJson(eqfeed_callback(json));
-                console.log(json)
-            })
-        }
-
-        // Loop through the results array and place a marker for each
-        // set of coordinates.
-        const eqfeed_callback = function (results) {
-            for (let i = 0; i < results.length; i++) {
-                const coords = results[i];
-                const latLng = new google.maps.LatLng(coords.lat, coords.lon);
-                const contentString =
-                    "</div>" +
-                    '<h4 id="firstHeading" class="firstHeading">' + results[i].street_address + '</h4>' +
-                    "</div>";
-                const infowindow = new google.maps.InfoWindow({
-                    content: contentString,
-                });
-                const marker = new google.maps.Marker({
-                    position: latLng,
-                    map: map,
-                    title: results[i].street_address
-                });
-                marker.addListener("click", () => {
-                    infowindow.open(map, marker);
-                });
-            }
-        };
-    </script>
+    <script src="main.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <div id="map"></div>
+    <div id="filter">
+        <div class="item own-year disable">
+            <input type="checkbox" id="ownYearCheck" class="disabled">
+            <label>Owned Year</label>
+            <select id="ownYearOp" disabled>
+                <option value=">">></option>
+                <option value="=">=</option>
+                <option value="<"><</option>
+            </select>
+            <input type="number" min="0" id="ownYear" disabled>
+        </div>
+        <div class="item sheriff-sale disable">
+            <input type="checkbox" id="sherSaleCheck" class="disabled">
+            <label>Sheriff Sale</label>
+            <input type="checkbox" id="sherSale" disabled>
+        </div>
+        <div class="item bankr disable">
+            <input id="bankrCheck" type="checkbox" class="disabled">
+            <label>Bankruptcy</label>
+            <input type="checkbox" id="bankr" disabled>
+        </div>
+        <div class="item live disable">
+            <input type="checkbox" id="liveCheck" class="disabled">
+            <label>Is Living</label>
+            <input type="checkbox" id="live" disabled>
+        </div>
+        <div class="item desc disable">
+            <input type="checkbox" id="descCheck" class="disabled">
+            <label>Description</label>
+            <select id="desc" disabled></select>
+        </div>
+        <button id="filterbtn" onclick="initMap()">Filter</button>
+    </div>
 </body>
 
 </html>

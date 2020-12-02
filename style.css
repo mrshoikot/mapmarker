@@ -1,0 +1,50 @@
+/* Always set the map height explicitly to define the size of the div
+* element that contains the map. */
+#map {
+    height: 100%;
+}
+
+/* Optional: Makes the sample page fill the window. */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#filter{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background: #fff;
+    padding: 2rem;
+    min-width: 22rem;
+}
+
+#filter .item.disable{
+    background: #ddd;
+}
+
+#filter .item{
+    padding: .7rem .5rem;
+    display: flex;
+    justify-content: space-between;
+    margin: .3rem 0;
+}
+
+#filter .item label{
+    flex: 1;
+    margin-left: 4px;
+}
+
+#filter .item input{
+    margin-left: 4px;
+}
+
+#filterbtn{
+    margin-top: 1rem;
+    padding: .5rem 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
